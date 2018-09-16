@@ -8,7 +8,6 @@ const {
 } = require('graphql');
 
 // Hardcoded data
-
 const customers = [
   {
     id: '1', name: 'John Doe', age: 35, email: 'jdoe@gmail.com'
@@ -50,13 +49,8 @@ const RootQuery = new GraphQLObjectType({
         }
       },
       resolve(parentValue, args) {
-        for (let i = 0; i < customers.length; i += 1) {
-          console.log(`Looping at ${i}`);
-          if (customers[i].id === args.id) {
-            return customers[i];
-          }
-        }
-        return null;
+        const matches = customers.filter(customer => customer.id === args.id);
+        return matches.length > 0 ? matches[0] : null;
       }
     }
   }
